@@ -14,6 +14,8 @@ const RouteTransition = React.createClass({
     atEnter: PropTypes.object.isRequired,
     atActive: PropTypes.object.isRequired,
     atLeave: PropTypes.object.isRequired,
+    onEnter: PropTypes.func,
+    onLeave: PropTypes.func,
     mapStyles: PropTypes.func,
     runOnMount: PropTypes.bool,
     style: PropTypes.object
@@ -59,10 +61,16 @@ const RouteTransition = React.createClass({
   },
 
   willEnter() {
+    if (this.props.onEnter) {
+      this.props.onEnter();
+    }
     return this.props.atEnter;
   },
 
   willLeave() {
+    if (this.props.onLeave) {
+      this.props.onLeave();
+    }
     return ensureSpring(this.props.atLeave);
   },
 
